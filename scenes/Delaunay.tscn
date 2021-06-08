@@ -4,5 +4,5 @@
 
 [node name="Delaunay" type="Node2D"]
 
-[node name="Node" type="Node" parent="."]
+[node name="DelaunayControl" type="Node" parent="."]
 script = ExtResource( 1 )
