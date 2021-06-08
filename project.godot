@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "DelaunayLine",
+"language": "GDScript",
+"path": "res://scripts/baseClass/DelaunayLine.gd"
+}, {
+"base": "Node2D",
 "class": "DelaunayPoint",
 "language": "GDScript",
 "path": "res://scripts/baseClass/DelaunayPoint.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://scripts/baseClass/DelaunayTriangle.gd"
 } ]
 _global_script_class_icons={
+"DelaunayLine": "",
 "DelaunayPoint": "",
 "DelaunayTriangle": ""
 }
