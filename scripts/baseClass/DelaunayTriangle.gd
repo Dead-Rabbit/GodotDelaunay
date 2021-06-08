@@ -18,6 +18,8 @@ var radius: float
 
 var line2D : Line2D
 
+enum draw_type {TEMP_TRIANGLE, TRIANGLE}
+
 # 初始化
 func _init(point1 : DelaunayPoint, point2 : DelaunayPoint, point3 : DelaunayPoint):
 	self.point1 = point1
@@ -28,23 +30,34 @@ func _init(point1 : DelaunayPoint, point2 : DelaunayPoint, point3 : DelaunayPoin
 	self.line3 = DelaunayLine.new(self.point3, self.point1)
 	
 	
-func draw(parent):
+func draw(parent, d_type):
 	line2D = Line2D.new()
 	line2D.width = 1
-	line2D.default_color = Color.white
+	match d_type:
+		0:
+			print("temp")
+			line2D.default_color = Color.yellowgreen
+		1:
+			print("triangle")
+			line2D.default_color = Color.red
+			
 	line2D.add_point(self.point1.getLocation())
 	line2D.add_point(self.point2.getLocation())
 	line2D.add_point(self.point3.getLocation())
+	line2D.add_point(self.point1.getLocation())
+	parent.add_child(line2D)
 	
 	
 # 判断点是否在外接圆右侧
 func checkIfPointOutSideOnRight(point):
 	return point.x > center.x + radius
 	
+	
 # 判断点是否在外接圆内
 func checkIfPointInside(point : DelaunayPoint):
 	var pos = Vector2(point.x, point.y)
 	return center.distance_to(pos) <= radius
+	
 	
 # 计算三角形的圆心和半径
 func calculateCenterAndRadius():
@@ -62,3 +75,4 @@ func calculateCenterAndRadius():
 	var y = point1.y + (a1 * c2  - a2 * c1) / d;
 	center = Vector2(x, y)
 	radius = center.distance_to(Vector2(point1.x, point1.y))
+

@@ -66,8 +66,8 @@ func Delaunay():
 			var tempTriangle = tempTriangles[index]
 			tempTriangle.calculateCenterAndRadius()
 			if tempTriangle.checkIfPointOutSideOnRight(point):
-				print("right")
-				tempTriangle.draw(self)
+#				print("right")
+				tempTriangle.draw(self, DelaunayTriangle.draw_type.TRIANGLE)
 				# 则该三角形为Delaunay三角形，保存到triangles
 				triangles.append(tempTriangle)
 				# 在temp里去除掉
@@ -75,7 +75,8 @@ func Delaunay():
 				index -= 1
 			elif !tempTriangle.checkIfPointInside(point):
 #　　　　　　　　 则该三角形为不确定        　　　　　　　　　     //后面会在问题中讨论
-				print("Not Inside")
+#				print("Not Inside")
+				pass
 			elif tempTriangle.checkIfPointInside(point):
 				print("Inside")
 				# 将三边保存至edge buffer
@@ -84,8 +85,6 @@ func Delaunay():
 				edgeBuffer.append(tempTriangle.line3)
 				tempTriangles.remove(index)
 				index -= 1
-			else:
-				print("None")
 			
 			index += 1
 		
