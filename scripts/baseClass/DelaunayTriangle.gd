@@ -16,6 +16,8 @@ var line3 : DelaunayLine
 var center : Vector2
 var radius: float
 
+var line2D : Line2D
+
 # 初始化
 func _init(point1 : DelaunayPoint, point2 : DelaunayPoint, point3 : DelaunayPoint):
 	self.point1 = point1
@@ -24,6 +26,10 @@ func _init(point1 : DelaunayPoint, point2 : DelaunayPoint, point3 : DelaunayPoin
 	self.line1 = DelaunayLine.new(self.point1, self.point2)
 	self.line2 = DelaunayLine.new(self.point2, self.point3)
 	self.line3 = DelaunayLine.new(self.point3, self.point1)
+	self.line2D = Line2D.new()
+	
+func draw():
+	
 	
 # 判断点是否在外接圆右侧
 func checkIfPointOutSideOnRight(point):

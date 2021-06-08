@@ -63,11 +63,11 @@ func Delaunay():
 		var edgeBuffer = []
 		var index = 0
 		while index < tempTriangles.size():
-			print("=====", index, " of ", tempTriangles.size())
 			var tempTriangle = tempTriangles[index]
 			tempTriangle.calculateCenterAndRadius()
 			if tempTriangle.checkIfPointOutSideOnRight(point):
 				print("right")
+				tempTriangle.draw()
 				# 则该三角形为Delaunay三角形，保存到triangles
 				triangles.append(tempTriangle)
 				# 在temp里去除掉
@@ -84,7 +84,6 @@ func Delaunay():
 				edgeBuffer.append(tempTriangle.line3)
 				tempTriangles.remove(index)
 				index -= 1
-				print("reduce to ", index)
 			else:
 				print("None")
 			
@@ -98,7 +97,6 @@ func Delaunay():
 			while j < edgeBuffer.size():
 				var edge2 = edgeBuffer[j]
 				if (edge1.compare(edge2)):
-					print("same")
 					edgeBuffer.remove(j)
 					j = j - 1
 				j += 1
