@@ -67,7 +67,7 @@ func Delaunay():
 			tempTriangle.calculateCenterAndRadius()
 			if tempTriangle.checkIfPointOutSideOnRight(point):
 				print("right")
-				tempTriangle.draw()
+				tempTriangle.draw(self)
 				# 则该三角形为Delaunay三角形，保存到triangles
 				triangles.append(tempTriangle)
 				# 在temp里去除掉

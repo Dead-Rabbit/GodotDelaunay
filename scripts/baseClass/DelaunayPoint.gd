@@ -10,6 +10,9 @@ func _init(x: float, y: float, id: int):
 	self.x = x
 	self.y = y
 	self.id = id
+	
+func getLocation():
+	return Vector2(x, y)
 
 func draw(parent):
 	var sp = Sprite.new()
