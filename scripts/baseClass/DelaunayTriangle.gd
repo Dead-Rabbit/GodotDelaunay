@@ -8,6 +8,8 @@ var point1 : DelaunayPoint
 var point2 : DelaunayPoint
 var point3 : DelaunayPoint
 
+var pointIds = []
+
 var line1 : DelaunayLine
 var line2 : DelaunayLine
 var line3 : DelaunayLine
@@ -18,7 +20,7 @@ var radius: float
 
 var line2D : Line2D
 
-enum draw_type {TEMP_TRIANGLE, TRIANGLE}
+enum draw_type {TEMP_TRIANGLE, TRIANGLE, FINAL, DELETE}
 
 # 初始化
 func _init(point1 : DelaunayPoint, point2 : DelaunayPoint, point3 : DelaunayPoint):
@@ -28,18 +30,31 @@ func _init(point1 : DelaunayPoint, point2 : DelaunayPoint, point3 : DelaunayPoin
 	self.line1 = DelaunayLine.new(self.point1, self.point2)
 	self.line2 = DelaunayLine.new(self.point2, self.point3)
 	self.line3 = DelaunayLine.new(self.point3, self.point1)
+	self.pointIds.append(point1.id)
+	self.pointIds.append(point2.id)
+	self.pointIds.append(point3.id)
+	line2D = Line2D.new()
 	
+	
+func compare(other):
+	return other.point1.id in pointIds \
+		and other.point2.id in pointIds \
+		and other.point3.id in pointIds
+
 	
 func draw(parent, d_type):
-	line2D = Line2D.new()
+	line2D.clear_points()
 	line2D.width = 1
 	match d_type:
 		0:
-			print("temp")
-			line2D.default_color = Color.yellowgreen
+			line2D.default_color = Color.yellow
 		1:
-			print("triangle")
 			line2D.default_color = Color.red
+		2:
+			line2D.default_color = Color.green
+		3:
+			line2D.clear_points()
+			return
 			
 	line2D.add_point(self.point1.getLocation())
 	line2D.add_point(self.point2.getLocation())

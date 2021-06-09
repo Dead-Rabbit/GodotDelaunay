@@ -21,7 +21,8 @@ func draw(parent):
 	parent.add_child(sp)
 	
 func compare(other):
-	return other.x == self.x and other.y == self.y
+#	return other.x == self.x and other.y == self.y
+	return other.id == self.id
 
 static func sort_by_x(a, b):
 	if a.x < b.x:

@@ -10,7 +10,7 @@ var area_right = 800
 var area_bottom = 500
 
 # 点相关
-var pointNum = 3
+var pointNum = 5
 var points = []
 var superTrianglePoints = []
 
@@ -108,10 +108,26 @@ func Delaunay():
 			var edge = edgeBuffer[i]
 			var tempTriangle = DelaunayTriangle.new(edge.point1, edge.point2, point)
 			tempTriangles.append(tempTriangle)
+			tempTriangle.draw(self, DelaunayTriangle.draw_type.TEMP_TRIANGLE)
 			i += 1
 
 #　　　　将triangles与temp triangles进行合并
+		var finalTriangles = []
+		finalTriangles.append_array(triangles)
+		finalTriangles.append_array(tempTriangles)
 #　　　　除去与超级三角形有关的三角形
+		i = 0
+		while i < finalTriangles.size():
+			var finalTriangle = finalTriangles[i]
+			if superTriangle.point1.id in finalTriangle.pointIds \
+			or superTriangle.point2.id in finalTriangle.pointIds \
+			or superTriangle.point3.id in finalTriangle.pointIds:
+				finalTriangle.draw(self, DelaunayTriangle.draw_type.DELETE)
+				finalTriangles.remove(i)
+				i -= 1
+			else:
+				finalTriangle.draw(self, DelaunayTriangle.draw_type.FINAL)
+			i+= 1
 				
 
 # 生成随机点
