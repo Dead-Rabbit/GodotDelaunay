@@ -10,7 +10,7 @@ var area_right = 800
 var area_bottom = 500
 
 # 点相关
-var pointNum = 3
+var pointNum = 10
 var points = []
 var superTrianglePoints = []
 
