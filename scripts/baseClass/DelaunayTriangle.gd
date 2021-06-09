@@ -65,7 +65,10 @@ func draw(parent, d_type):
 	
 # 判断点是否在外接圆右侧
 func checkIfPointOutSideOnRight(point):
-	return point.x > center.x + radius
+#	return point.x > center.x + radius
+	var dis = self.center.distance_to(Vector2(point.x, point.y))
+	var dx = point.x - self.center.x
+	return dx > 0 and dis > self.radius
 	
 	
 # 判断点是否在外接圆内

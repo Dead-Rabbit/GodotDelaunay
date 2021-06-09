@@ -10,7 +10,7 @@ var area_right = 800
 var area_bottom = 500
 
 # 点相关
-var pointNum = 5
+var pointNum = 3
 var points = []
 var superTrianglePoints = []
 
@@ -73,11 +73,16 @@ func Delaunay():
 				# 在temp里去除掉
 				tempTriangles.remove(index)
 				index -= 1
-			elif !tempTriangle.checkIfPointInside(point):
+				index += 1
+				continue
+				
+			if !tempTriangle.checkIfPointInside(point):
 #　　　　　　　　 则该三角形为不确定        　　　　　　　　　     //后面会在问题中讨论
 #				print("Not Inside")
-				pass
-			elif tempTriangle.checkIfPointInside(point):
+				index += 1
+				continue
+				
+			if tempTriangle.checkIfPointInside(point):
 				print("Inside")
 				# 将三边保存至edge buffer
 				edgeBuffer.append(tempTriangle.line1)
