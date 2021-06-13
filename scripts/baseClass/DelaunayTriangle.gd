@@ -53,6 +53,7 @@ func draw(parent, d_type):
 		2:
 			line2D.default_color = Color.green
 		3:
+			line2D.default_color = Color.transparent
 			line2D.clear_points()
 			return
 			

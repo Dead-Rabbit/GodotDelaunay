@@ -10,7 +10,7 @@ var area_right = 800
 var area_bottom = 500
 
 # 点相关
-var pointNum = 10
+var pointNum = 4
 var points = []
 var superTrianglePoints = []
 
@@ -61,38 +61,28 @@ func _ready():
 func Delaunay():
 	for point in points:
 		var edgeBuffer = []
-		var index = 0
-		while index < tempTriangles.size():
-			var tempTriangle = tempTriangles[index]
+		for i in range(tempTriangles.size() - 1, -1, -1):
+			var tempTriangle = tempTriangles[i]
 			tempTriangle.calculateCenterAndRadius()
 			if tempTriangle.checkIfPointOutSideOnRight(point):
-#				print("right")
-				tempTriangle.draw(self, DelaunayTriangle.draw_type.TRIANGLE)
+#				tempTriangle.draw(self, DelaunayTriangle.draw_type.TRIANGLE)
 				# 则该三角形为Delaunay三角形，保存到triangles
 				triangles.append(tempTriangle)
 				# 在temp里去除掉
-				tempTriangles.remove(index)
-				index -= 1
-				index += 1
+				tempTriangles.remove(i)
 				continue
 				
 			if !tempTriangle.checkIfPointInside(point):
-#　　　　　　　　 则该三角形为不确定        　　　　　　　　　     //后面会在问题中讨论
-#				print("Not Inside")
-				index += 1
+				# 则该三角形为不确定
 				continue
 				
 			if tempTriangle.checkIfPointInside(point):
-				print("Inside")
 				# 将三边保存至edge buffer
 				edgeBuffer.append(tempTriangle.line1)
 				edgeBuffer.append(tempTriangle.line2)
 				edgeBuffer.append(tempTriangle.line3)
-				tempTriangles.remove(index)
-				index -= 1
+				tempTriangles.remove(i)
 			
-			index += 1
-		
 		# 对 Edge Buffer 进行去重
 		var i = 0
 		while i < edgeBuffer.size():
@@ -113,27 +103,30 @@ func Delaunay():
 			var edge = edgeBuffer[i]
 			var tempTriangle = DelaunayTriangle.new(edge.point1, edge.point2, point)
 			tempTriangles.append(tempTriangle)
-			tempTriangle.draw(self, DelaunayTriangle.draw_type.TEMP_TRIANGLE)
+#			tempTriangle.draw(self, DelaunayTriangle.draw_type.TEMP_TRIANGLE)
 			i += 1
 
-#　　　　将triangles与temp triangles进行合并
-		var finalTriangles = []
-		finalTriangles.append_array(triangles)
-		finalTriangles.append_array(tempTriangles)
-#　　　　除去与超级三角形有关的三角形
-		i = 0
-		while i < finalTriangles.size():
-			var finalTriangle = finalTriangles[i]
-			if superTriangle.point1.id in finalTriangle.pointIds \
-			or superTriangle.point2.id in finalTriangle.pointIds \
-			or superTriangle.point3.id in finalTriangle.pointIds:
-				finalTriangle.draw(self, DelaunayTriangle.draw_type.DELETE)
-				finalTriangles.remove(i)
-				i -= 1
-			else:
-				finalTriangle.draw(self, DelaunayTriangle.draw_type.FINAL)
-			i+= 1
-				
+
+	# 将triangles与temp triangles进行合并
+	var finalTriangles = []
+	finalTriangles.append_array(triangles)
+	finalTriangles.append_array(tempTriangles)
+		
+	# 除去与超级三角形有关的三角形
+	var i = 0
+	while i < finalTriangles.size():
+		var finalTriangle = finalTriangles[i]
+		if superTriangle.point1.id in finalTriangle.pointIds \
+		or superTriangle.point2.id in finalTriangle.pointIds \
+		or superTriangle.point3.id in finalTriangle.pointIds:
+			finalTriangle.draw(self, DelaunayTriangle.draw_type.DELETE)
+			finalTriangles.remove(i)
+			i -= 1
+		else:
+			finalTriangle.draw(self, DelaunayTriangle.draw_type.FINAL)
+		i+= 1
+			
+	print("Get Final Triangle's Num: ", finalTriangles.size())
 
 # 生成随机点
 func GenerateRandomNodes():
@@ -172,7 +165,7 @@ func GenerateSuperTrianglePoint():
 func DrawNodes():
 	for point in points:
 		point.draw(self)
-		print(point.x)
+		print(point.x, point.y)
 	
 	for point in superTrianglePoints:
 		point.draw(self)
