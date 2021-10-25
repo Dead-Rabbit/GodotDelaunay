@@ -159,7 +159,7 @@ func GenerateSuperTrianglePoint():
 	
 	superTriangle = DelaunayTriangle.new(point1, point2, point3)
 	tempTriangles.append(superTriangle)
-	triangles.append(superTriangle)
+	# triangles.append(superTriangle)
 	
 # 绘制点
 func DrawNodes():
